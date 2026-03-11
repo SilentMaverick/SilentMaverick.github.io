@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shaikh Fahad — Hack Club Gap Year</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap');
+
+  :root {
+    --red: #ec3750;
+    --orange: #ff8c37;
+    --yellow: #f1c40f;
+    --bg: #0f0e0d;
+    --surface: #1a1917;
+    --surface2: #252320;
+    --border: #333128;
+    --text: #f0ede8;
+    --muted: #8a8070;
+    --mono: 'Space Mono', monospace;
+    --serif: 'DM Serif Display', serif;
+    --sans: 'IBM Plex Sans', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* noise texture overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.6;
+  }
+
+  .page {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 48px 40px 80px;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 36px;
+    margin-bottom: 40px;
+    position: relative;
+  }
+
+  .hero-tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--red);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .hero-tag::before {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 2px;
+    background: var(--red);
+  }
+
+  .name {
+    font-family: var(--serif);
+    font-size: 72px;
+    line-height: 1;
+    letter-spacing: -1px;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+  .name em {
+    font-style: italic;
+    color: var(--red);
+  }
+
+  .title-line {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 24px;
+    letter-spacing: 0.04em;
+  }
+
+  .contact-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 0;
+  }
+  .contact-row a {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+    text-decoration: none;
+    border: 1px solid var(--border);
+    padding: 5px 12px;
+    margin-right: 8px;
+    margin-bottom: 8px;
+    transition: all 0.15s;
+    display: inline-block;
+  }
+  .contact-row a:hover {
+    border-color: var(--red);
+    color: var(--red);
+  }
+
+  /* ── INTRO STATEMENT ── */
+  .manifesto {
+    background: var(--surface);
+    border-left: 3px solid var(--red);
+    padding: 20px 24px;
+    margin-bottom: 40px;
+    font-family: var(--serif);
+    font-size: 19px;
+    line-height: 1.55;
+    color: var(--text);
+    font-style: italic;
+  }
+  .manifesto strong {
+    font-style: normal;
+    color: var(--red);
+    font-family: var(--mono);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── SECTION HEADERS ── */
+  .section {
+    margin-bottom: 44px;
+  }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ── SHIP CARDS (projects) ── */
+  .ships {
+    display: grid;
+    gap: 16px;
+  }
+
+  .ship {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 22px 24px;
+    position: relative;
+    transition: border-color 0.2s;
+  }
+  .ship:hover { border-color: var(--red); }
+
+  .ship-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+    gap: 16px;
+  }
+
+  .ship-name {
+    font-family: var(--mono);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .ship-tech {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--red);
+    background: rgba(236, 55, 80, 0.1);
+    border: 1px solid rgba(236, 55, 80, 0.25);
+    padding: 3px 8px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .ship-link {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    text-decoration: none;
+    display: block;
+    margin-bottom: 10px;
+  }
+  .ship-link:hover { color: var(--orange); }
+
+  .ship-desc {
+    font-size: 13.5px;
+    color: #c4bfb8;
+    line-height: 1.65;
+    font-family: var(--sans);
+    font-weight: 300;
+  }
+  .ship-desc strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .ship-badge {
+    position: absolute;
+    top: -1px;
+    right: 24px;
+    background: var(--red);
+    color: white;
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    padding: 3px 8px;
+    text-transform: uppercase;
+  }
+
+  /* ── SKILL GRID ── */
+  .skill-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+  }
+
+  .skill-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 14px 16px;
+  }
+
+  .skill-block-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--orange);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .skill-block-items {
+    font-size: 12.5px;
+    color: #c4bfb8;
+    line-height: 1.8;
+    font-family: var(--sans);
+    font-weight: 300;
+  }
+
+  /* ── TIMELINE (experience) ── */
+  .timeline { display: flex; flex-direction: column; gap: 20px; }
+
+  .tl-item {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 0 20px;
+    align-items: start;
+  }
+
+  .tl-date {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    padding-top: 2px;
+    text-align: right;
+    line-height: 1.4;
+  }
+
+  .tl-body {
+    border-left: 2px solid var(--border);
+    padding-left: 20px;
+    position: relative;
+  }
+  .tl-body::before {
+    content: '';
+    position: absolute;
+    left: -5px;
+    top: 7px;
+    width: 8px;
+    height: 8px;
+    background: var(--red);
+    border-radius: 50%;
+  }
+
+  .tl-title {
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 2px;
+  }
+  .tl-org {
+    font-size: 12px;
+    color: var(--orange);
+    margin-bottom: 6px;
+    font-family: var(--sans);
+    font-weight: 500;
+  }
+  .tl-desc {
+    font-size: 13px;
+    color: #c4bfb8;
+    line-height: 1.65;
+    font-weight: 300;
+  }
+
+  /* ── EDUCATION ── */
+  .edu-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 20px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  .edu-left .edu-school {
+    font-family: var(--mono);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .edu-left .edu-deg {
+    font-size: 13px;
+    color: var(--muted);
+    font-weight: 300;
+    margin-bottom: 8px;
+  }
+  .edu-left .edu-courses {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: #7a7060;
+    line-height: 1.8;
+  }
+  .edu-right {
+    text-align: right;
+    flex-shrink: 0;
+  }
+  .edu-right .edu-year {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--orange);
+    display: block;
+    margin-bottom: 4px;
+  }
+  .edu-right .edu-cgpa {
+    font-family: var(--mono);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text);
+    display: block;
+  }
+  .edu-right .edu-cgpa-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+    display: block;
+  }
+
+  /* ── FOOTER NOTE ── */
+  .footer-note {
+    margin-top: 56px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-note .blink {
+    display: inline-block;
+    width: 8px;
+    height: 14px;
+    background: var(--red);
+    animation: blink 1s step-end infinite;
+    vertical-align: middle;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity:0; transform:translateY(18px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+  .hero        { animation: fadeUp 0.5s ease both; }
+  .manifesto   { animation: fadeUp 0.5s 0.1s ease both; }
+  .section:nth-child(1) { animation: fadeUp 0.5s 0.15s ease both; }
+  .section:nth-child(2) { animation: fadeUp 0.5s 0.2s ease both; }
+  .section:nth-child(3) { animation: fadeUp 0.5s 0.25s ease both; }
+  .section:nth-child(4) { animation: fadeUp 0.5s 0.3s ease both; }
+  .section:nth-child(5) { animation: fadeUp 0.5s 0.35s ease both; }
+
+  @media(max-width:600px) {
+    .name { font-size: 48px; }
+    .page { padding: 28px 20px 60px; }
+    .tl-item { grid-template-columns: 1fr; }
+    .tl-date { text-align: left; }
+    .edu-block { flex-direction: column; }
+    .edu-right { text-align: left; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ── HERO ── -->
+  <header class="hero">
+    <div class="hero-tag">Hack Club Gap Year Application · 2026</div>
+    <div class="name">YOUR<br><em>NAME</em></div>
+    <div class="title-line">// builder · hardware hacker · 2nd year @ BIT Mesra · ships things that work</div>
+    <div class="contact-row">
+      <a href="mailto:your@email.com">sffahad.2000@email.com</a>
+      <a href="https://github.com/SilentMaverick" target="_blank">github.com/SilentMaverick</a>
+      <a href="https://linkedin.com/in/fampire" target="_blank">linkedin.com/in/fampire</a>
+      <a href="tel:+918878863333">+91-8878863333</a>
+    </div>
+  </header>
+
+  <!-- ── MANIFESTO / INTRO ── -->
+  <div class="manifesto">
+    I don't wait for permission to build things. I've written a SQL engine in C from scratch, 
+    built combat robots that fought at IIT Bombay Techfest, and shipped tools that 
+    real people actually use. <strong>I ship, therefore I am.</strong> 
+    I want a year where I build programs that put hardware and code into the hands of thousands 
+    of teenagers — and prove that the best way to learn is to make something real.
+  </div>
+
+  <!-- ── SHIPS (PROJECTS) ── -->
+  <section class="section">
+    <div class="section-label">Things I've Shipped</div>
+    <div class="ships">
+
+      <div class="ship">
+        <div class="ship-badge">🏆 Competed @ IIT Bombay</div>
+        <div class="ship-header">
+          <span class="ship-name">RoboWar Combat Robot — Techfest IIT Bombay</span>
+          <span class="ship-tech">Arduino · C/C++ · Hardware</span>
+        </div>
+        <span class="ship-link">↳ Built &amp; competed at Techfest 2024, IIT Bombay — Asia's largest science &amp; tech festival</span>
+        <p class="ship-desc">
+          Designed and built a <strong>full combat robot from scratch</strong> for the RoboWar event at IIT Bombay Techfest — one of the most competitive robotics events in India with teams from IITs, NITs, and international colleges. 
+          Engineered the chassis, weapon system, and drive train, then programmed the entire control system on <strong>Arduino</strong> with custom PWM motor control, radio receiver integration, and real-time response tuning under millisecond latency constraints.
+          Survived repeated weapon impacts in the arena — the robot worked exactly as designed under actual battle conditions.
+        </p>
+      </div>
+
+      <div class="ship">
+        <div class="ship-header">
+          <span class="ship-name">Arduino Obstacle-Avoidance Rover</span>
+          <span class="ship-tech">Arduino · Ultrasonic · Motor Control</span>
+        </div>
+        <span class="ship-link">↳ Autonomous navigation using HC-SR04 sensors + L298N motor driver</span>
+        <p class="ship-desc">
+          Built an autonomous rover that maps its environment in real-time using <strong>ultrasonic distance sensors</strong>, makes directional decisions with a custom decision-tree algorithm, and steers via differential drive. 
+          Programmed entirely in C on Arduino — <strong>no libraries for the core logic</strong>, just raw sensor reads, timed pulses, and motor PWM. Tuned PID-like responsiveness through empirical testing across 50+ obstacle configurations.
+        </p>
+      </div>
+
+      <div class="ship">
+        <div class="ship-header">
+          <span class="ship-name">Arduino Line-Following Robot</span>
+          <span class="ship-tech">Arduino · IR Sensors · PID Control</span>
+        </div>
+        <span class="ship-link">↳ Sub-50ms sensor-to-motor feedback loop on bare metal C</span>
+        <p class="ship-desc">
+          Built a line-following robot with <strong>IR sensor array</strong> and a hand-tuned proportional control loop achieving sub-50ms response times. 
+          The challenge wasn't just building it — it was understanding <em>why</em> it wobbled, tuning gain constants through first-principles reasoning, and eliminating signal noise from ambient light. 
+          Became my introduction to feedback control systems and real-time embedded constraints.
+        </p>
+      </div>
+
+      <div class="ship">
+        <div class="ship-header">
+          <span class="ship-name">ZenoSQL — SQL Engine Written from Scratch in C</span>
+          <span class="ship-tech">C · Systems · Compilers</span>
+        </div>
+        <a class="ship-link" href="https://github.com/SilentMaverick/ZenoSQL" target="_blank">↳ github.com/SilentMaverick/ZenoSQL ★1</a>
+        <p class="ship-desc">
+          Built a working <strong>relational database engine in pure C</strong> — no libraries, no frameworks. Wrote a tokenizer, a recursive-descent parser for SQL syntax, a binary file storage layer, and a query executor from scratch.
+          This isn't a tutorial project — it handles <strong>CREATE TABLE, INSERT, and SELECT</strong> on real persistent data. Doing this taught me more about how computers actually store and retrieve information than any course ever has.
+        </p>
+      </div>
+
+      <div class="ship">
+        <div class="ship-header">
+          <span class="ship-name">Git Curator — GitHub Intelligence Tool</span>
+          <span class="ship-tech">JavaScript · GitHub API · UI</span>
+        </div>
+        <a class="ship-link" href="https://github.com/SilentMaverick/Git_Curator" target="_blank">↳ github.com/SilentMaverick/Git_Curator ★2</a>
+        <p class="ship-desc">
+          Built a tool to search, track, sort, and analyze GitHub repos and users with <strong>AI-assisted discovery</strong>. Integrated the GitHub REST API with rate-limit handling, multi-criteria sorting, and live pagination over 50M+ repositories.
+          I built this because I was genuinely frustrated with GitHub's search — the most hacker reason to build anything.
+        </p>
+      </div>
+
+      <div class="ship">
+        <div class="ship-header">
+          <span class="ship-name">KeyMapper — System-Level Keyboard Remapping Engine</span>
+          <span class="ship-tech">C++ · OS Internals · Input Systems</span>
+        </div>
+        <a class="ship-link" href="https://github.com/SilentMaverick" target="_blank">↳ github.com/SilentMaverick</a>
+        <p class="ship-desc">
+          Wrote a keyboard remapping engine in <strong>C++ that intercepts key events at the OS level</strong> — raw scan codes, not OS key events. 
+          Implemented a config-file parser for binding definitions, support for chord mappings and modifier combos, and sub-millisecond rerouting latency. 
+          This forced me deep into how input devices, kernel drivers, and the OS input stack actually communicate.
+        </p>
+      </div>
+
+      <div class="ship">
+        <div class="ship-header">
+          <span class="ship-name">GIF → ASCII Real-Time Renderer</span>
+          <span class="ship-tech">HTML · Canvas API · Pixel Sampling</span>
+        </div>
+        <a class="ship-link" href="https://github.com/SilentMaverick/Gif_To_Character" target="_blank">↳ github.com/SilentMaverick/Gif_To_Character ★1</a>
+        <p class="ship-desc">
+          Converts animated GIFs to real-time ASCII art in the browser using the <strong>Canvas API and grayscale pixel-sampling</strong>. 
+          Processes 24+ FPS animations entirely client-side with no server — just math and pixels. 
+          Built it in an afternoon because I thought it would look cool. It does.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── HARDWARE SKILLS ── -->
+  <section class="section">
+    <div class="section-label">Tools &amp; Hardware I Work With</div>
+    <div class="skill-grid">
+      <div class="skill-block">
+        <div class="skill-block-label">Microcontrollers</div>
+        <div class="skill-block-items">Arduino Uno / Nano<br>raspberry pi 5<br>PWM, I2C, UART</div>
+      </div>
+      <div class="skill-block">
+        <div class="skill-block-label">Hardware Build</div>
+        <div class="skill-block-items">Chassis fabrication<br>Motor drivers (L298N)<br>Servo / DC motors<br>Combat robot design</div>
+      </div>
+      <div class="skill-block">
+        <div class="skill-block-label">Sensors &amp; Actuators</div>
+        <div class="skill-block-items">Ultrasonic (HC-SR04)<br>IR arrays<br>Radio receivers<br>Relay modules</div>
+      </div>
+      <div class="skill-block">
+        <div class="skill-block-label">Languages</div>
+        <div class="skill-block-items">C (systems)<br>C++ (embedded + OOP)<br>Python<br>SQL</div>
+      </div>
+      <div class="skill-block">
+        <div class="skill-block-label">Software Tools</div>
+        <div class="skill-block-items">Arduino IDE<br>GCC / G++<br>Git + GitHub<br>Linux / Bash</div>
+      </div>
+      <div class="skill-block">
+        <div class="skill-block-label">CS Depth</div>
+        <div class="skill-block-items">Memory management<br>Compilers / parsers<br>File I/O internals<br>OS input stack</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── EXPERIENCE / ACTIVITIES ── -->
+  <section class="section">
+    <div class="section-label">What I've Done</div>
+    <div class="timeline">
+
+      <div class="tl-item">
+        <div class="tl-date">Jan 2025 / Jan 2024 </div>
+        <div class="tl-body">
+          <div class="tl-title">RoboWar Competitor</div>
+          <div class="tl-org">Techfest · IIT Bombay — Asia's Largest Sci-Tech Festival</div>
+          <div class="tl-desc">Designed, built, and piloted a full combat robot against university teams across India. Built the entire system — mechanical, electrical, and software — and competed in arena battles. The robot worked. That's the only metric that matters.</div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-date">2024–Present</div>
+        <div class="tl-body">
+          <div class="tl-title">Independent Builder &amp; Open Source Shipper</div>
+          <div class="tl-org">GitHub · 13 Public Repos · Hack Club ethos</div>
+          <div class="tl-desc">Ship projects because they're interesting, not because a teacher asked. Built a SQL engine, a combat robot, keyboard remappers, and ASCII renderers — just because I wanted to see if I could. Earned GitHub Pull Shark, YOLO, and Quickdraw badges through real contribution activity.</div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-date">2024–Present</div>
+        <div class="tl-body">
+          <div class="tl-title">Arduino Hardware Tinkerer</div>
+          <div class="tl-org">Self-directed — Rovers, Robots, Embedded Systems</div>
+          <div class="tl-desc">Built multiple hardware projects from scratch — line-followers, obstacle-avoiders, combat robots. Not from kits. Learned by burning components, reading datasheets at midnight, and rewriting motor control loops until they worked.</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── EDUCATION ── -->
+  <section class="section">
+    <div class="section-label">Education</div>
+    <div class="edu-block">
+      <div class="edu-left">
+        <div class="edu-school">Birla Institute of Technology, Mesra</div>
+        <div class="edu-deg">B.Tech · Computer Science &amp; Engineering · 2nd Year</div>
+        <div class="edu-courses">
+          DSA · Operating Systems · Computer Networks<br>
+          Database Systems · Discrete Mathematics<br>
+          Digital Electronics · Microprocessors
+        </div>
+      </div>
+      <div class="edu-right">
+        <span class="edu-year">2024 → 2028</span>
+        <span class="edu-cgpa">7.46</span>
+        <span class="edu-cgpa-label">CGPA / 10</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── WHY HACK CLUB ── -->
+  <section class="section">
+    <div class="section-label">Why This Gap Year</div>
+    <div class="manifesto" style="margin-bottom:0; font-size:16px;">
+      Hack Club is the only place I've seen where teenagers build things that actually get used — 
+      <strong>14k GitHub stars, murder-mystery hackathons in Vienna, hardware grants to 77 countries.</strong>
+      I want to design the next version of that. I want to run programs that hand 
+      an Arduino and a $200 grant to a kid in a tier-3 city and tell them to build something weird. 
+      I've done that build myself. I know what it feels like when it works.
+      <strong>I want to create that feeling for 1,000 other teenagers.</strong>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer class="footer-note">
+    <span>made with vim + obsessive tinkering <span class="blink"></span></span>
+    <span>github.com/SilentMaverick · 2026</span>
+  </footer>
+
+</div>
+</body>
+</html>
